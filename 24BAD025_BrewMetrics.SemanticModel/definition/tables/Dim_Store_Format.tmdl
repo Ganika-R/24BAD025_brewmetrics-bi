@@ -1,0 +1,25 @@
+table Dim_Store_Format
+	lineageTag: 20c42cd0-a292-48a4-9582-8abb5dbfc7f4
+
+	column store_format
+		dataType: string
+		lineageTag: 903f398f-ebf7-4feb-8968-59b8498957b5
+		summarizeBy: none
+		sourceColumn: store_format
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Store_Format = m
+		mode: import
+		source =
+				let
+				    Source = brewmetrics_sales,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"store_format"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

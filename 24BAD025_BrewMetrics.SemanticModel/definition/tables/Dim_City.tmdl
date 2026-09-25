@@ -1,0 +1,25 @@
+table Dim_City
+	lineageTag: 668269d4-374d-4df1-acd1-77f8b18b1ea5
+
+	column city
+		dataType: string
+		lineageTag: 8a4756de-f832-4384-b874-3dc5fbd28819
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_City = m
+		mode: import
+		source =
+				let
+				    Source = brewmetrics_sales,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"city"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

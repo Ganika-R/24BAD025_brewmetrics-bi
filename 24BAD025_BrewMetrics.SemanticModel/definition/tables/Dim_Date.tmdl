@@ -1,0 +1,130 @@
+table Dim_Date
+	lineageTag: 1ddd0944-817a-4a81-8213-d82b96c1341f
+
+	column sale_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6fd55f27-fa1f-4fa0-8a86-42b65f1f90b1
+		summarizeBy: none
+		sourceColumn: sale_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 436cc1c5-eec8-4eb5-8d1a-3ede7c05d444
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: 6a19f4b5-3d2a-4a93-b9e9-69188d770a72
+			defaultHierarchy: LocalDateTable_84a3b1cf-d841-4561-9e6a-19fb7ca8ddb3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column city
+		dataType: string
+		lineageTag: 4d78d97f-f1ec-48da-b318-17ed647e9ccd
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_format
+		dataType: string
+		lineageTag: fe3c9198-4c02-4bcf-9197-a15f40350c40
+		summarizeBy: none
+		sourceColumn: store_format
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 5b9f7d56-1a84-44f8-8ef1-186470647844
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column item
+		dataType: string
+		lineageTag: 9ac8477b-b14d-470b-bc7e-54a6ca28310d
+		summarizeBy: none
+		sourceColumn: item
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: be90b614-3cbd-4851-bd16-cc53ef102f5e
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: int64
+		formatString: 0
+		lineageTag: 18aefb67-6f89-41a9-a82a-533cb6ef38e1
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_amount
+		dataType: double
+		lineageTag: 56c668a6-477d-4b55-8f5c-886df72c6d11
+		summarizeBy: sum
+		sourceColumn: sales_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: a91853fb-115e-4918-9b21-4d886ece620c
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: c25f260a-5b00-4cb3-a11f-0cd0cedb9894
+		summarizeBy: none
+		sourceColumn: Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 550b5441-326a-43f7-9399-60773be30499
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Date = m
+		mode: import
+		source =
+				let
+				    Source = brewmetrics_sales,
+				    #"Removed Duplicates" = Table.Distinct(Source, {"date"}),
+				    #"Inserted Year" = Table.AddColumn(#"Removed Duplicates", "Year", each Date.Year([date]), Int64.Type),
+				    #"Inserted Month Name" = Table.AddColumn(#"Inserted Year", "Month Name", each Date.MonthName([date]), type text),
+				    #"Inserted Month" = Table.AddColumn(#"Inserted Month Name", "Month", each Date.Month([date]), Int64.Type)
+				in
+				    #"Inserted Month"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

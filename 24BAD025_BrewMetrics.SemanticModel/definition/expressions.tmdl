@@ -1,0 +1,13 @@
+expression brewmetrics_sales =
+		let
+		    Source = Csv.Document(File.Contents("C:\Users\Administrator\OneDrive\Documents\24BAD025_brewmetrics-bi\brewmetrics_sales.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"sale_id", Int64.Type}, {"date", type date}, {"city", type text}, {"store_format", type text}, {"category", type text}, {"item", type text}, {"quantity", Int64.Type}, {"unit_price", Int64.Type}, {"sales_amount", type number}})
+		in
+		    #"Changed Type"
+	lineageTag: d59ab4a9-ba1d-43e0-a611-6f2f817a14fa
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

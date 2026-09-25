@@ -1,0 +1,33 @@
+table Dim_Product
+	lineageTag: 89254a03-7e8f-4238-9f1d-aff0f3aa2238
+
+	column category
+		dataType: string
+		lineageTag: 33fc3e2c-c00a-471c-8d60-6eea2d0fd408
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column item
+		dataType: string
+		lineageTag: e08c2505-d59a-448b-8884-758aa21393bc
+		summarizeBy: none
+		sourceColumn: item
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Product = m
+		mode: import
+		source =
+				let
+				    Source = brewmetrics_sales,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"category", "item"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

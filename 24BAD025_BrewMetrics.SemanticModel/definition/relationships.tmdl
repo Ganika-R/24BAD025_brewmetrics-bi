@@ -1,0 +1,46 @@
+relationship 6a19f4b5-3d2a-4a93-b9e9-69188d770a72
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Date.date
+	toColumn: LocalDateTable_84a3b1cf-d841-4561-9e6a-19fb7ca8ddb3.Date
+
+relationship AutoDetected_2cd7d8ed-7252-4a9e-9ba8-9dade16d138b
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Dim_Date.sale_id
+	toColumn: Fact_Sales.sale_id
+
+relationship AutoDetected_9ec561cb-c0b8-4d9f-bc9b-e465ab88b3e0
+	isActive: false
+	fromColumn: Fact_Sales.city
+	toColumn: Dim_City.city
+
+relationship AutoDetected_3164aabe-a0bc-4a9b-9515-badc30959b4b
+	isActive: false
+	fromColumn: Dim_Date.city
+	toColumn: Dim_City.city
+
+relationship AutoDetected_d512a96b-ae32-42b9-8978-060925e6f025
+	isActive: false
+	fromColumn: Fact_Sales.store_format
+	toColumn: Dim_Store_Format.store_format
+
+relationship AutoDetected_1f250259-59d3-4723-b53c-02475c7dafad
+	isActive: false
+	fromColumn: Dim_Date.store_format
+	toColumn: Dim_Store_Format.store_format
+
+relationship AutoDetected_c5ecfbdd-f292-4ddf-b6ec-983740e203fd
+	isActive: false
+	fromColumn: Fact_Sales.item
+	toColumn: Dim_Product.item
+
+relationship AutoDetected_41f42271-564c-4880-a4f5-7e7e1e77b23f
+	isActive: false
+	fromColumn: Dim_Date.item
+	toColumn: Dim_Product.item
+
+relationship ddf9b23a-1e4e-f4c5-4dad-75ef86b58d90
+	isActive: false
+	fromColumn: Fact_Sales.date
+	toColumn: Dim_Date.date
+
