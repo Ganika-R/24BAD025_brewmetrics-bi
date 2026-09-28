@@ -36,6 +36,13 @@ table Fact_Sales
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Total Sales' =
+			
+			SUM(Fact_Sales[sales_amount])
+		lineageTag: 6ac634fc-da54-4438-8709-26c51ea01c00
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column sale_id
 		dataType: int64
 		formatString: 0

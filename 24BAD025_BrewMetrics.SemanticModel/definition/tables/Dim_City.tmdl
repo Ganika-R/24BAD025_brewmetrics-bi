@@ -1,13 +1,6 @@
 table Dim_City
 	lineageTag: 668269d4-374d-4df1-acd1-77f8b18b1ea5
 
-	measure 'Total Sales' =
-			
-			SUM(Fact_Sales[sales_amount])
-		lineageTag: 17dff3df-0051-4c87-9a53-60ce1e6b8ef1
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	measure 'MoM Sales_Growth %' =
 			
 			VAR CurrentSales = [Total Sales]
