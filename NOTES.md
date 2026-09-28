@@ -79,3 +79,25 @@ RANKX(
 ### Verification
 
 The measure was tested in a visual containing Dim_City[city], Total Sales, and City Sales Rank. Cities were ranked based on their sales, with rank 1 assigned to the city with the highest sales.
+
+## 4. Average Order Value (AOV)
+
+### Copilot's initial suggestion
+
+Copilot suggested calculating Average Order Value by dividing total sales by the distinct count of sale_id. The suggested measure used SUM(Fact_Sales[sales_amount]) for total sales and DISTINCTCOUNT(Fact_Sales[sale_id]) for the number of orders.
+
+### Correction
+
+The calculation logic was correct. I reused the existing [Total Sales] measure instead of repeating the SUM calculation.
+
+### Final measure
+
+AOV =
+DIVIDE(
+    [Total Sales],
+    DISTINCTCOUNT(Fact_Sales[sale_id])
+)
+
+### Verification
+
+The measure was tested in a visual with city and AOV. The value represented the average sales amount per distinct order and changed according to the selected filters.
