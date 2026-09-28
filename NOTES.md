@@ -29,3 +29,28 @@ RETURN
 ### Verification
 
 The measure was tested using the Dim_Date field in a monthly visual to compare the current month's sales with the previous month's sales.
+
+## 2. Running Total Sales
+
+### Copilot's initial suggestion
+
+Copilot suggested using ALLSELECTED(Dim_Date[date]) with FILTER to calculate cumulative sales up to the current date. The suggested measure directly used SUM(Fact_Sales[sales_amount]).
+
+### Correction
+
+I reused the existing [Total Sales] measure instead of repeating the SUM calculation. This makes the measure more consistent with the existing model and avoids duplicating the sales calculation.
+
+### Final measure
+
+Running Total Sales =
+CALCULATE(
+    [Total Sales],
+    FILTER(
+        ALLSELECTED(Dim_Date[date]),
+        Dim_Date[date] <= MAX(Dim_Date[date])
+    )
+)
+
+### Verification
+
+The measure was tested in a visual containing Dim_Date[date] and Running Total Sales. The value increased cumulatively as the date progressed.
