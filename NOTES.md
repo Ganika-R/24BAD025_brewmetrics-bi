@@ -54,3 +54,28 @@ CALCULATE(
 ### Verification
 
 The measure was tested in a visual containing Dim_Date[date] and Running Total Sales. The value increased cumulatively as the date progressed.
+
+## 3. City Sales Ranking
+
+### Copilot's initial suggestion
+
+Copilot suggested using RANKX with ALLSELECTED(Dim_City[city]) to rank cities based on [Total Sales]. It used DESC so that the city with the highest sales receives rank 1 and DENSE for consecutive ranking.
+
+### Correction
+
+The suggested RANKX logic was correct for the model. I reused the existing [Total Sales] measure rather than defining SUM(Fact_Sales[sales_amount]) again.
+
+### Final measure
+
+City Sales Rank =
+RANKX(
+    ALLSELECTED(Dim_City[city]),
+    [Total Sales],
+    ,
+    DESC,
+    DENSE
+)
+
+### Verification
+
+The measure was tested in a visual containing Dim_City[city], Total Sales, and City Sales Rank. Cities were ranked based on their sales, with rank 1 assigned to the city with the highest sales.
